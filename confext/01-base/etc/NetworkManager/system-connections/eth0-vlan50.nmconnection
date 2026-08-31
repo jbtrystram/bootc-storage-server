@@ -7,7 +7,7 @@ autoconnect=true
 [ethernet]
 # this MUST match the MAC address that proxmox assign
 # to the VLAN 50 interface
-mac-address=
+mac-address=BC:24:11:BD:60:26
 
 [ipv4]
 method=manual
