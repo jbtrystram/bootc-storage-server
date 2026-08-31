@@ -1,0 +1,18 @@
+[connection]
+id=eth0-vlan50
+uuid=3ea8c770-8d7b-4358-ad65-f8ba4cea2fd7
+type=ethernet
+autoconnect=true
+
+[ethernet]
+# this MUST match the MAC address that proxmox assign
+# to the VLAN 50 interface
+mac-address=
+
+[ipv4]
+method=manual
+address1=192.168.50.5/24,192.168.250.1
+dns=192.168.250.1;
+
+[ipv6]
+method=automatic

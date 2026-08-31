@@ -1,0 +1,8 @@
+[Unit]
+Description=Mount 16tb Btrfs partition
+
+[Mount]
+What=/dev/disk/by-label/16tb
+Where=/mnt/disks/16tb
+Type=btrfs
+Options=defaults

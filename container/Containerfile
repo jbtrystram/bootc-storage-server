@@ -1,0 +1,19 @@
+# FROM quay.io/centos-bootc/centos-bootc:stream10
+FROM quay.io/fedora/fedora-bootc:44
+
+# install required tools
+RUN <<EORUN
+ dnf install -y cockpit nfs-utils \
+   https://github.com/trapexit/mergerfs/releases/download/2.42.0/mergerfs-2.42.0-1.fc44.x86_64.rpm \
+   https://github.com/amadvance/snapraid/releases/download/v14.9/snapraid-14.9-1.x86_64.rpm \
+   https://github.com/amadvance/snapraid-daemon/releases/download/v1.14/snapraid-daemon-1.14-1.x86_64.rpm \
+   https://github.com/45Drives/cockpit-file-sharing/releases/download/v4.6.1-2/cockpit-file-sharing-4.6.1-2.el9.noarch.rpm
+
+dnf clean all
+rm -rf /run/cockpit
+EORUN
+
+# Make sure the NFS server starts
+RUN systemctl enable nfs-server cockpit.socket
+
+RUN bootc container lint

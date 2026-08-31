@@ -1,0 +1,12 @@
+[customizations.kernel]
+append = "console=tty0 console=ttyS0,115200n8"
+
+[[customizations.user]]
+name = "core"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP3NyDGIBnRhsrqRGaYUlv7jMqhR8FVSWwsExB9VwRR1 sysadmin@jib.lol"
+groups = ["wheel"]
+
+[[customizations.disk.partitions]]
+mountpoint = "/"
+fs_type = "xfs"
+minsize = "20 GiB"

@@ -1,0 +1,8 @@
+[Unit]
+Description=Mount 8tb Btrfs partition
+
+[Mount]
+What=/dev/disk/by-label/8tb
+Where=/mnt/disks/8tb
+Type=btrfs
+Options=defaults
