@@ -64,4 +64,4 @@ podman run --rm --privileged \
 use partitions UUIDs for mounts
 Write a SOP for volume and disk management operations.
 Write NFS config confext.
-
+Setup automated rebuilds of the image for updates
