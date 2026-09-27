@@ -1,5 +1,5 @@
 [connection]
-id=eth0-vlan50
+id=eth1-vlan50
 uuid=3ea8c770-8d7b-4358-ad65-f8ba4cea2fd7
 type=ethernet
 autoconnect=true
