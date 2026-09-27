@@ -1,0 +1,3 @@
+[install.filesystem.root]
+type = "xfs"
+

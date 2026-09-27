@@ -1,0 +1,2 @@
+# core user can do whatever
+core        ALL=(ALL)       NOPASSWD: ALL

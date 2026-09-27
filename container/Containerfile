@@ -11,9 +11,19 @@ RUN <<EORUN
 
 dnf clean all
 rm -rf /run/cockpit
+rm -r /var/log
+rm -r /var/cache
+rm -rf /var/lib/dnf
 EORUN
 
 # Make sure the NFS server starts
 RUN systemctl enable nfs-server cockpit.socket
+
+# Allow core user to do sudo
+COPY ./core-user-sudo /etc/sudoers.d/core-user-sudo
+
+# Specify a default root FS
+# See https://github.com/osbuild/image-builder/issues/2724
+COPY bootc-rootfs.toml /usr/lib/bootc/install/rootfs.toml
 
 RUN bootc container lint
