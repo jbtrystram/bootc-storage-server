@@ -3,7 +3,7 @@ FROM quay.io/fedora/fedora-bootc:44
 
 # install required tools
 RUN <<EORUN
- dnf install -y cockpit nfs-utils \
+ dnf install -y cockpit nfs-utils git-core \
    https://github.com/trapexit/mergerfs/releases/download/2.42.0/mergerfs-2.42.0-1.fc44.x86_64.rpm \
    https://github.com/amadvance/snapraid/releases/download/v14.9/snapraid-14.9-1.x86_64.rpm \
    https://github.com/amadvance/snapraid-daemon/releases/download/v1.14/snapraid-daemon-1.14-1.x86_64.rpm \
