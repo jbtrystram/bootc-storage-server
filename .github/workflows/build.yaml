@@ -33,11 +33,11 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Build toolbox image
         id: build-image
-        uses: redhat-actions/buildah-build@v3
+        uses: redhat-actions/buildah-build@719e3c40d8af9790c23eca13f7daa339f2867034
         with:
           image: "${{ env.IMAGE_REGISTRY }}/${{ env.REGISTRY_ORG }}/${{ env.IMAGE_NAME }}"
           context: ${{ env.CONTEXT }}
@@ -48,7 +48,7 @@ jobs:
             ${{ env.CONTEXT }}/Containerfile
 
       - name: Log in to Quay.io
-        uses: redhat-actions/podman-login@v1
+        uses: redhat-actions/podman-login@50c2d9a331bb67c8fdab99b86455fad05e2e3252
         with:
           username: ${{ env.REGISTRY_USER }}
           password: ${{ env.REGISTRY_PASSWORD }}
@@ -56,7 +56,7 @@ jobs:
 
       - name: Push to quay.io
         id: push-to-quay
-        uses: redhat-actions/push-to-registry@v2
+        uses: redhat-actions/push-to-registry@94ade333c38ecc0e60e94785125d9a52ca423b37
         with:
           tags: ${{ steps.build-image.outputs.image }}:${{ env.TAG }}
 
@@ -75,10 +75,10 @@ jobs:
       DIGEST: ${{ needs.build-and-publish-image.outputs.image_digest }}
 
     steps:
-      - uses: sigstore/cosign-installer@main
+      - uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6
 
       - name: Log in to Quay.io
-        uses: redhat-actions/podman-login@v1
+        uses: redhat-actions/podman-login@50c2d9a331bb67c8fdab99b86455fad05e2e3252
         with:
           username: ${{ env.REGISTRY_USER }}
           password: ${{ env.REGISTRY_PASSWORD }}
@@ -104,7 +104,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@6f9f17788090df1f26f669e9d70d6ae9567deba6
 
       - name: Update build date in README
         run: |
