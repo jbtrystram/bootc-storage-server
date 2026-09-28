@@ -2,6 +2,8 @@
 
 This is a custom bootc image to run the storage server on my homelab.
 
+Last good build: replace-by-action
+
 ## Goals
 
 Manage a multi-drives storage through the following tools:
@@ -58,4 +60,3 @@ See https://vormox.com/blog/how-to-import-a-qcow2-or-vmdk-disk-image-into-a-vm-i
 use partitions UUIDs for mounts
 Write a SOP for volume and disk management operations.
 Write NFS config confext.
-Setup automated rebuilds of the image for updates
