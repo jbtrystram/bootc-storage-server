@@ -1,0 +1,20 @@
+[Unit]
+Description=MergerFS tank pool mount (all disks)
+# TODO: add 4tb-1 and 4tb-2 here once they are mounted
+RequiresMountsFor=/mnt/disks/8tb/tank /mnt/disks/16tb/tank
+After=local-fs.target
+
+[Service]
+Type=simple
+KillMode=none
+ExecStart=/usr/bin/mergerfs \
+  -f \
+  -o config=/etc/mergerfs/tank.ini \
+  /mnt/disks/8tb/tank \
+  /mnt/disks/16tb/tank \
+  /mnt/pools/tank
+ExecStop=/usr/bin/umount /mnt/pools/tank
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,19 @@
+[Unit]
+Description=MergerFS safe pool mount (parity-protected data only)
+# TODO: add more disks here once they get their own parity coverage
+RequiresMountsFor=/mnt/disks/8tb/safe
+After=local-fs.target
+
+[Service]
+Type=simple
+KillMode=none
+ExecStart=/usr/bin/mergerfs \
+  -f \
+  -o config=/etc/mergerfs/safe.ini \
+  /mnt/disks/8tb/safe \
+  /mnt/pools/safe
+ExecStop=/usr/bin/umount /mnt/pools/safe
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=Mount 16tb Btrfs 'tank' subvolume
+
+[Mount]
+What=/dev/disk/by-partuuid/e70d05a2-00a1-4adc-8cfc-aedaa37589d6
+Where=/mnt/disks/16tb/tank
+Type=btrfs
+Options=subvol=tank

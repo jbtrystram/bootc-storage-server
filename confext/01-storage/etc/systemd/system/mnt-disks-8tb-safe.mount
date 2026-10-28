@@ -1,0 +1,8 @@
+[Unit]
+Description=Mount 8tb Btrfs 'safe' subvolume
+
+[Mount]
+What=/dev/disk/by-partuuid/1a7e0b12-f066-4b1c-b227-cde958973fee
+Where=/mnt/disks/8tb/safe
+Type=btrfs
+Options=subvol=safe
