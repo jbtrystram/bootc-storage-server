@@ -60,3 +60,11 @@ See https://vormox.com/blog/how-to-import-a-qcow2-or-vmdk-disk-image-into-a-vm-i
 use partitions UUIDs for mounts
 Write a SOP for volume and disk management operations.
 Write NFS config confext.
+
+
+# Notes
+
+I had to manually set the correct SELinux context to the `authorized_keys` file, unsure why :
+```
+  chcon system_u:object_r:ssh_home_t:s0 ~/.ssh/authorized_keys
+```
