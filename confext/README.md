@@ -13,17 +13,17 @@ I want to be able to pool my disks, and get some parity, but not on all data
 (linux ISOs don't need to be backed up).
 
 Let's say we have 4 disks :
-- 4TB mounted to `/mnt/disks/4tb-1`
-- 4TB mounted to `/mnt/disks/4tb-2`
-- 8TB mounted to `/mnt/disks/8tb`
-- 16TB mounted to `/mnt/disks/16tb`
+- 4TB mounted to `/var/mnt/disks/4tb-1`
+- 4TB mounted to `/var/mnt/disks/4tb-2`
+- 8TB mounted to `/var/mnt/disks/8tb`
+- 16TB mounted to `/var/mnt/disks/16tb`
 
 ### btrfs subvolumes as mergerFS branches
 
 Each disk is formatted with btrfs. Rather than passing the whole disk to mergerFS,
-every disk gets a `tank` subvolume, mounted at `/mnt/disks/<disk>/tank`.
+every disk gets a `tank` subvolume, mounted at `/var/mnt/disks/<disk>/tank`.
 This subvolume is used as a mergerFS branch. For disks that store parity data we use a
-`safe` subvolume, mounted at `/mnt/disks/<disk>/safe`.
+`safe` subvolume, mounted at `/var/mnt/disks/<disk>/safe`.
 
 This keeps the `safe` and `tank` pools from overlapping on disks that
 participate in both. Each pool only ever sees its
@@ -33,16 +33,16 @@ Subvolumes of the same disk have no space quota, so they compete for the same
 free space. There is no reserved/isolated capacity for either pool.
 
 So we set up two mergerFS pools:
-- `/mnt/pools/safe` pooling only `/mnt/disks/8tb/safe`.
-- `/mnt/pools/tank` pooling the `tank` subvolume of every disk.
+- `/var/mnt/pools/safe` pooling only `/var/mnt/disks/8tb/safe`.
+- `/var/mnt/pools/tank` pooling the `tank` subvolume of every disk.
 
 ### Snapraid
 
-Snapraid is set to use `/mnt/disks/8tb/safe` as a data disk
-and `/mnt/disks/16tb` as the parity store. This give us redundancy for the
+Snapraid is set to use `/var/mnt/disks/8tb/safe` as a data disk
+and `/var/mnt/disks/16tb` as the parity store. This give us redundancy for the
 `safe` subvolume.
 
-Finally, we have a 2TB ssd mounted to `/mnt/flash` for transient and write intensive data:
+Finally, we have a 2TB ssd mounted to `/var/mnt/flash` for transient and write intensive data:
 databases, partial downloads and so on. This will preserve the lifespan of the hard drives.
 It isn't part of any mergerFS pool or of the snapraid array.
 
@@ -57,14 +57,17 @@ allowing us to make use of most of our space :)
 2. Mount it temporarily and create the `tank` subvolume (and `safe` too, if this
    disk should also join the safe pool):
    ```
-   mount /dev/<device> /mnt/tmp
-   btrfs subvolume create /mnt/tmp/tank
-   umount /mnt/tmp
+   mount /dev/<device> /var/mnt/tmp
+   btrfs subvolume create /var/mnt/tmp/tank
+   umount /var/mnt/tmp
    ```
-3. Add a `mnt-disks-<disk>-tank.mount` unit under `01-storage/etc/systemd/system/`,
+3. Add a `var-mnt-disks-<disk>-tank.mount` unit under `01-storage/etc/systemd/system/`,
    using the disk's PARTUUID (`/dev/disk/by-partuuid/...`), mounted at
-   `/mnt/disks/<disk>/tank` with `Options=subvol=tank`.
-4. Add `/mnt/disks/<disk>/tank` to `mnt-tank.service`'s `RequiresMountsFor=` and
+   `/var/mnt/disks/<disk>/tank` with `Options=subvol=tank`.
+   Note: the `Where=` path must be the fully canonical path (`/var/mnt/...`, not `/mnt/...`)
+   since `/mnt` is a symlink to `var/mnt` on this OS and systemd refuses to mount
+   `.mount` units whose path traverses a symlink.
+4. Add `/var/mnt/disks/<disk>/tank` to `mnt-tank.service`'s `RequiresMountsFor=` and
    to the `mergerfs` branch list in its `ExecStart=`.
 
 ## 02-shares
@@ -78,5 +81,9 @@ To install the confext, first clone the repo under a disk that is available earl
 ```
 git clone $this-repo /var/config
 sudo mkdir /var/lib/confexts
-sudo ln -s /var/config/confexts/01-storage /var/lib/confexts/:q
+sudo ln -s /var/config/confext/01-storage /var/lib/confexts/
 ```
+
+## Selinux
+Note that files cloned to var will have an incorrect SELinux label,
+so they need to be manually re-labelled after cloning.
