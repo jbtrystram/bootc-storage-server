@@ -2,7 +2,7 @@ FROM quay.io/fedora/fedora-bootc:45
 
 # install required tools
 RUN <<EORUN
-  dnf install -y cockpit nfs-utils git-core qemu-guest-agent \
+  dnf install -y cockpit nfs-utils git-core qemu-guest-agent smartctl \
    https://github.com/trapexit/mergerfs/releases/download/2.42.0/mergerfs-2.42.0-1.fc44.x86_64.rpm \
    https://github.com/amadvance/snapraid/releases/download/v15.1/snapraid-15.1-1.x86_64.rpm \
    https://github.com/amadvance/snapraid-daemon/releases/download/v2.1/snapraid-daemon-2.1-1.x86_64.rpm \
