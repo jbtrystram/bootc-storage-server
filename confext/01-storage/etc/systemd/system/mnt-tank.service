@@ -17,4 +17,4 @@ ExecStop=/usr/bin/umount /var/mnt/pools/tank
 Restart=on-failure
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target
