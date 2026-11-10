@@ -6,7 +6,6 @@ After=local-fs.target
 
 [Service]
 Type=simple
-KillMode=none
 ExecStart=/usr/bin/mergerfs \
   -f \
   -o config=/etc/mergerfs/tank.ini \

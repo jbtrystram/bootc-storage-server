@@ -1,1 +1,4 @@
 ID=_any
+# reload the manager so it picks up 
+# multi-users.target drop-ins
+EXTENSION_RELOAD_MANAGER=1
