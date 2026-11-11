@@ -42,7 +42,7 @@ Snapraid is set to use `/var/mnt/disks/8tb/safe` as a data disk
 and `/var/mnt/disks/16tb` as the parity store. This give us redundancy for the
 `safe` subvolume.
 
-Finally, we have a 2TB ssd mounted to `/var/mnt/flash` for transient and write intensive data:
+Finally, we have a 2TB ssd mounted to `/var/mnt/disks/flash` for transient and write intensive data:
 databases, partial downloads and so on. This will preserve the lifespan of the hard drives.
 It isn't part of any mergerFS pool or of the snapraid array.
 

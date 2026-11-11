@@ -1,0 +1,9 @@
+[Unit]
+Description=Mount 2tb flash drive
+
+[Mount]
+# Could also be /dev/disk/by-label/flash
+What=/dev/disk/by-partuuid/8ec357b0-6681-4731-b685-e0012431a54d
+Where=/var/mnt/disks/flash/
+Type=btrfs
+
