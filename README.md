@@ -55,12 +55,6 @@ sudo podman run --rm --privileged \
 Attach the disk to the VM with : `qm disk import <VM_ID> /path/to/qcow local-lvm --format qcow2`
 See https://vormox.com/blog/how-to-import-a-qcow2-or-vmdk-disk-image-into-a-vm-in-proxmox-ve-qm-importdisk-explained
 
-# TODO
-
-use partitions UUIDs for mounts
-Write a SOP for volume and disk management operations.
-Write NFS config confext.
-
 
 # Notes
 
