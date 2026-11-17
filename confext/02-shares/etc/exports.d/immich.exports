@@ -1,0 +1,6 @@
+# We allow the management subnet hosts to mount the exports RO for
+# diagnosing purposes.
+# Library
+/mnt/pools/safe/immich 192.168.50.10(rw,root_squash,anonuid=1010,anonuid=1010) 192.168.250.0/24(ro)
+# Database
+/mnt/disks/flash/immich 192.168.50.10(rw,root_squash,anonuid=1010,anonuid=1010) 192.168.250.0/24(ro)
